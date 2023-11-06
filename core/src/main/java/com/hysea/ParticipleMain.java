@@ -1,5 +1,6 @@
 package com.hysea;
 
+import com.hysea.util.FileUtil;
 import org.ansj.domain.Result;
 import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.ToAnalysis;
@@ -24,7 +25,7 @@ public class ParticipleMain {
         //<[^>]*> > 空格
         //"[ ]*[+]\n[^"]*" > 空格
         File file = new File("G:\\project\\processMemory\\core\\src\\main\\resources\\process\\DriversLicenseProcess.xml");
-        String str = txt2String(file);
+        String str = FileUtil.txt2String(file);
 
         //不一定非中文就不是步骤
 //        str = str.replaceAll("[^\\u4e00-\\u9fa5]+"," ");
@@ -49,22 +50,5 @@ public class ParticipleMain {
 //        }
         System.out.println(termSet);
 
-    }
-
-    public static String txt2String(File file){
-        StringBuilder result = new StringBuilder();
-        try{
-            // 构造一个BufferedReader类来读取文件
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String s = null;
-            // 使用readLine方法，一次读一行
-            while((s = br.readLine())!=null){
-                result.append(System.lineSeparator()).append(s);
-            }
-            br.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return result.toString();
     }
 }
