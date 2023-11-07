@@ -2,14 +2,12 @@
 
     <process id="crossTheRoad">
         <cases>
-            <case>
-                <case-name>绿灯闪时已经在斑马线上</case-name>
+            <case name="绿灯闪时已经在斑马线上">
                 <steps>
                     <step>点刹</step>
                 </steps>
             </case>
-            <case>
-                <case-name>红灯</case-name>
+            <case name="红灯">
                 <steps>
                     <step>停车</step>
                     <step>挂一档</step>
@@ -18,8 +16,7 @@
                     <step>挂二挡</step>
                 </steps>
             </case>
-            <case>
-                <case-name>绿灯</case-name>
+            <case name="绿灯">
                 <steps>
                     <step>点刹过</step>
                     <step>挂一档</step>

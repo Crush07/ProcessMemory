@@ -1,9 +1,13 @@
 package com.hysea;
 
+import com.hysea.entity.Proc;
+import com.hysea.entity.Process;
 import com.hysea.entity.ProcessNode;
 import com.hysea.util.FileUtil;
 import com.hysea.util.Matchers;
 import com.hysea.util.RandomUtils;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,6 +36,16 @@ public class Main {
         File file = new File("G:\\project\\processMemory\\core\\src\\main\\resources\\process\\DriversLicenseProcess.xml");
         String str = FileUtil.txt2String(file);
         List<String> steps = Matchers.getStringByRegex("<step>[^<>]*</step>", str).stream().map(s -> s.replaceAll("</?step>","")).collect(Collectors.toList());
+
+        // 将XML转换为Java对象
+//        XStream xStream = new XStream(new DomDriver());
+//        Process process = (Process) xStream.fromXML(str);
+//        //输出Java对象
+//        System.out.println(process);
+        XStream xStream = new XStream(new DomDriver());
+        Proc process = (Proc) xStream.fromXML(str);
+        //输出Java对象
+        System.out.println(process);
 
         //计时线程
         Thread timer = new Thread(() -> {
