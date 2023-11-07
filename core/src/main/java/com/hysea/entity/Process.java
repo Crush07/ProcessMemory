@@ -1,5 +1,8 @@
 package com.hysea.entity;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -58,7 +61,11 @@ public class Process {
                  * steps : {"step":"点刹"}
                  */
 
+                @XStreamAlias("name")
+                @XStreamAsAttribute
                 private String caseName;
+
+                @XStreamImplicit(itemFieldName = "carInfo")
                 private List<ProcessNode> processNodeList;
 
             }
