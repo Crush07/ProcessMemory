@@ -37,22 +37,41 @@ public class Main {
         List<String> steps = Matchers.getStringByRegex("<step>[^<>]*</step>", str).stream().map(s -> s.replaceAll("</?step>","")).collect(Collectors.toList());
 
         // 将XML转换为Java对象
-        XStream xStream = new XStream();
-        xStream.alias("conditions",Processes.Conditions.class);
-        xStream.addImplicitCollection(Processes.Conditions.class,"conditions");
-        xStream.alias("condition",Processes.Conditions.Condition.class);
-        xStream.alias("steps",Processes.Steps.class);
-        xStream.addImplicitCollection(Processes.Steps.class,"steps");
-        xStream.alias("step",Processes.Steps.Step.class);
-        xStream.alias("processes",Processes.class);
-        xStream.addImplicitCollection(Processes.class,"processes");
-        xStream.alias("process",Processes.Process.class);
-        xStream.aliasField("id", Processes.Process.class, "processId");
-        xStream.alias("disorder",Processes.Disorder.class);
-        xStream.alias("process-step",Processes.ProcessStep.class);
+        XStream xStream = new XStream(new DomDriver());
+        xStream.addDefaultImplementation(Processes.Process.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.Conditions.class,ProcessNode.class);
+        xStream.addDefaultImplementation(Processes.Conditions.Condition.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.Steps.class,ProcessNode.class);
+        xStream.addDefaultImplementation(Processes.Steps.Step.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.ProcessStep.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.Disorder.class,ProcessNode.class);
+//        xStream.alias("conditions",Processes.Conditions.class);
+//        xStream.addImplicitCollection(Processes.Conditions.class,"conditions");
+//        xStream.alias("condition",Processes.Conditions.Condition.class);
+//        xStream.alias("steps",Processes.Steps.class);
+//        xStream.addImplicitCollection(Processes.Steps.class,"steps");
+//        xStream.alias("step",Processes.Steps.Step.class);
+//        xStream.alias("processes",Processes.class);
+//        xStream.addImplicitCollection(Processes.class,"processes");
+//        xStream.alias("process",Processes.Process.class);
+//        xStream.aliasField("id", Processes.Process.class, "processId");
+//        xStream.alias("disorder",Processes.Disorder.class);
+//        xStream.alias("process-step",Processes.ProcessStep.class);
 
         // 新增这一行，根据类型添加安全权限
         xStream.allowTypes(new Class[]{
+                Processes.Conditions.class,
+                Processes.Conditions.Condition.class,
+                Processes.Steps.class,
+                Processes.Steps.Step.class,
+                Processes.class,
+                Processes.Process.class,
+                Processes.Disorder.class,
+                Processes.ProcessStep.class
+        });
+
+        xStream.autodetectAnnotations(true);
+        xStream.processAnnotations(new Class[]{
                 Processes.Conditions.class,
                 Processes.Conditions.Condition.class,
                 Processes.Steps.class,

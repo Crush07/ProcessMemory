@@ -1,8 +1,11 @@
 package com.hysea.entity;
 
+import com.hysea.converter.ProcessNodeConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.converters.extended.ToAttributedValueConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,20 +15,26 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
+@XStreamAlias("processes")
 public class Processes {
 
+    @XStreamImplicit(itemFieldName = "process")
     private List<Process> processes;
 
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
     @Data
+    @XStreamAlias("steps")
     public static class Steps extends ProcessNode {
 
+        @XStreamImplicit(itemFieldName = "step")
         private List<ProcessNode> steps;
 
         @EqualsAndHashCode(callSuper = true)
         @NoArgsConstructor
         @Data
+        @XStreamAlias("step")
+        @XStreamConverter(value = ToAttributedValueConverter.class,strings = {"step"})
         public static class Step extends ProcessNode {
             private String step;
         }
@@ -34,6 +43,7 @@ public class Processes {
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
     @Data
+    @XStreamAlias("process-step")
     public static class ProcessStep extends Process {
         /**
          * -process : crossTheRoad
@@ -47,13 +57,16 @@ public class Processes {
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
     @Data
+    @XStreamAlias("conditions")
     public static class Conditions extends ProcessNode {
 
+        @XStreamImplicit(itemFieldName = "condition")
         private List<Condition> conditions;
 
         @EqualsAndHashCode(callSuper = true)
         @NoArgsConstructor
         @Data
+        @XStreamAlias("condition")
         public static class Condition extends Process {
             /**
              * condition-name : 绿灯闪时已经在斑马线上
@@ -72,6 +85,7 @@ public class Processes {
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
     @Data
+    @XStreamAlias("disorder")
     public static class Disorder extends Steps {
 
     }
@@ -79,6 +93,7 @@ public class Processes {
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
     @AllArgsConstructor
+    @XStreamAlias("process")
     public static class Process extends Steps {
 
         /**
@@ -90,7 +105,9 @@ public class Processes {
         @XStreamAsAttribute
         private String processId;
 
-        private List<ProcessNode> processNodeList;
+        @XStreamImplicit
+        @XStreamConverter(value = ProcessNodeConverter.class)
+        private List<? extends ProcessNode> processNodeList;
 
     }
 }
