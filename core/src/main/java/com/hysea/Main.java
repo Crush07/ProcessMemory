@@ -1,8 +1,8 @@
 package com.hysea;
 
-import com.hysea.entity.Proc;
-import com.hysea.entity.Process;
+import com.alibaba.fastjson.JSONObject;
 import com.hysea.entity.ProcessNode;
+import com.hysea.entity.Processes;
 import com.hysea.util.FileUtil;
 import com.hysea.util.Matchers;
 import com.hysea.util.RandomUtils;
@@ -32,20 +32,43 @@ public class Main {
 
         flushLastTime();
 
-
-        File file = new File("G:\\project\\processMemory\\core\\src\\main\\resources\\process\\DriversLicenseProcess.xml");
+        File file = new File(Objects.requireNonNull(Main.class.getClassLoader().getResource("")).getPath()+"\\process\\DriversLicenseProcess.xml");
         String str = FileUtil.txt2String(file);
         List<String> steps = Matchers.getStringByRegex("<step>[^<>]*</step>", str).stream().map(s -> s.replaceAll("</?step>","")).collect(Collectors.toList());
 
         // 将XML转换为Java对象
-//        XStream xStream = new XStream(new DomDriver());
-//        Process process = (Process) xStream.fromXML(str);
-//        //输出Java对象
-//        System.out.println(process);
-        XStream xStream = new XStream(new DomDriver());
-        Proc process = (Proc) xStream.fromXML(str);
+        XStream xStream = new XStream();
+        xStream.alias("conditions",Processes.Conditions.class);
+        xStream.addImplicitCollection(Processes.Conditions.class,"conditions");
+        xStream.alias("condition",Processes.Conditions.Condition.class);
+        xStream.alias("steps",Processes.Steps.class);
+        xStream.addImplicitCollection(Processes.Steps.class,"steps");
+        xStream.alias("step",Processes.Steps.Step.class);
+        xStream.alias("processes",Processes.class);
+        xStream.addImplicitCollection(Processes.class,"processes");
+        xStream.alias("process",Processes.Process.class);
+        xStream.aliasField("id", Processes.Process.class, "processId");
+        xStream.alias("disorder",Processes.Disorder.class);
+        xStream.alias("process-step",Processes.ProcessStep.class);
+
+        // 新增这一行，根据类型添加安全权限
+        xStream.allowTypes(new Class[]{
+                Processes.Conditions.class,
+                Processes.Conditions.Condition.class,
+                Processes.Steps.class,
+                Processes.Steps.Step.class,
+                Processes.class,
+                Processes.Process.class,
+                Processes.Disorder.class,
+                Processes.ProcessStep.class
+        });
+//        xStream.allowTypesByRegExp(new String[] { ".*" });
+//        xStream.ignoreUnknownElements();
+
+        Processes process = (Processes) xStream.fromXML(str);
+
         //输出Java对象
-        System.out.println(process);
+        System.out.println(JSONObject.toJSONString(process));
 
         //计时线程
         Thread timer = new Thread(() -> {
