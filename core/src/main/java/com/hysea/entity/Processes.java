@@ -1,6 +1,6 @@
 package com.hysea.entity;
 
-import com.hysea.converter.ProcessNodeConverter;
+import com.hysea.converter.ProcessesNodeConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @XStreamAlias("processes")
+@XStreamConverter(value = ProcessesNodeConverter.class)
 public class Processes {
 
     @XStreamImplicit(itemFieldName = "process")
@@ -77,8 +78,6 @@ public class Processes {
             @XStreamAsAttribute
             private String conditionName;
 
-            private List<ProcessNode> processNodeList;
-
         }
     }
 
@@ -94,6 +93,7 @@ public class Processes {
     @NoArgsConstructor
     @AllArgsConstructor
     @XStreamAlias("process")
+    @Data
     public static class Process extends Steps {
 
         /**
@@ -106,8 +106,7 @@ public class Processes {
         private String processId;
 
         @XStreamImplicit
-        @XStreamConverter(value = ProcessNodeConverter.class)
-        private List<? extends ProcessNode> processNodeList;
+        private List<? super ProcessNode> processNodeList;
 
     }
 }

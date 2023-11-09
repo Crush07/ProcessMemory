@@ -1,6 +1,7 @@
 package com.hysea;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hysea.converter.ProcessesNodeConverter;
 import com.hysea.entity.ProcessNode;
 import com.hysea.entity.Processes;
 import com.hysea.util.FileUtil;
@@ -38,23 +39,23 @@ public class Main {
 
         // 将XML转换为Java对象
         XStream xStream = new XStream(new DomDriver());
-        xStream.addDefaultImplementation(Processes.Process.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Processes.Conditions.class,ProcessNode.class);
-        xStream.addDefaultImplementation(Processes.Conditions.Condition.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Processes.Steps.class,ProcessNode.class);
-        xStream.addDefaultImplementation(Processes.Steps.Step.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Processes.ProcessStep.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Processes.Disorder.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.Process.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Processes.Conditions.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.Conditions.Condition.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Processes.Steps.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Processes.Steps.Step.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Processes.ProcessStep.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Processes.Disorder.class,ProcessNode.class);
 //        xStream.alias("conditions",Processes.Conditions.class);
-//        xStream.addImplicitCollection(Processes.Conditions.class,"conditions");
+////        xStream.addImplicitCollection(Processes.Conditions.class,"conditions");
 //        xStream.alias("condition",Processes.Conditions.Condition.class);
 //        xStream.alias("steps",Processes.Steps.class);
-//        xStream.addImplicitCollection(Processes.Steps.class,"steps");
+////        xStream.addImplicitCollection(Processes.Steps.class,"steps");
 //        xStream.alias("step",Processes.Steps.Step.class);
 //        xStream.alias("processes",Processes.class);
-//        xStream.addImplicitCollection(Processes.class,"processes");
+////        xStream.addImplicitCollection(Processes.class,"processes");
 //        xStream.alias("process",Processes.Process.class);
-//        xStream.aliasField("id", Processes.Process.class, "processId");
+////        xStream.aliasField("id", Processes.Process.class, "processId");
 //        xStream.alias("disorder",Processes.Disorder.class);
 //        xStream.alias("process-step",Processes.ProcessStep.class);
 
@@ -81,6 +82,7 @@ public class Main {
                 Processes.Disorder.class,
                 Processes.ProcessStep.class
         });
+        xStream.registerConverter(new ProcessesNodeConverter());
 //        xStream.allowTypesByRegExp(new String[] { ".*" });
 //        xStream.ignoreUnknownElements();
 
