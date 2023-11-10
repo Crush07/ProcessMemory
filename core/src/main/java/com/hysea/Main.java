@@ -68,7 +68,8 @@ public class Main {
                 Processes.class,
                 Processes.Process.class,
                 Processes.Disorder.class,
-                Processes.ProcessStep.class
+                Processes.ProcessStep.class,
+                ProcessNode.class
         });
 
         xStream.autodetectAnnotations(true);
@@ -80,7 +81,8 @@ public class Main {
                 Processes.class,
                 Processes.Process.class,
                 Processes.Disorder.class,
-                Processes.ProcessStep.class
+                Processes.ProcessStep.class,
+                ProcessNode.class
         });
         xStream.registerConverter(new ProcessesNodeConverter());
 //        xStream.allowTypesByRegExp(new String[] { ".*" });

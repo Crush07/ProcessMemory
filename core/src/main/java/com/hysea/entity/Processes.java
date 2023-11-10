@@ -29,7 +29,7 @@ public class Processes {
     public static class Steps extends ProcessNode {
 
         @XStreamImplicit(itemFieldName = "step")
-        private List<ProcessNode> steps;
+        private List<? super ProcessNode> steps;
 
         @EqualsAndHashCode(callSuper = true)
         @NoArgsConstructor
@@ -52,7 +52,7 @@ public class Processes {
 
         @XStreamAlias("process")
         @XStreamAsAttribute
-        private String processName;
+        private String mappingProcessId;
     }
 
     @EqualsAndHashCode(callSuper = true)

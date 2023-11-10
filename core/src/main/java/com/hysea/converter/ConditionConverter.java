@@ -9,10 +9,10 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.StringJoiner;
 
-public class ProcessNodeConverter implements Converter {
+public class ConditionConverter implements Converter {
     @Override
     public void marshal(Object o, HierarchicalStreamWriter hierarchicalStreamWriter, MarshallingContext marshallingContext) {
 
@@ -28,15 +28,15 @@ public class ProcessNodeConverter implements Converter {
 
     @Override
     public Object unmarshal(HierarchicalStreamReader hierarchicalStreamReader, UnmarshallingContext unmarshallingContext) {
-        Processes.Process res = new Processes.Process();
+        Processes.Conditions.Condition res = new Processes.Conditions.Condition();
 
         //属性
         int attributeCount = hierarchicalStreamReader.getAttributeCount();
         for(int i = 0;i < attributeCount;i++){
             String attribute = hierarchicalStreamReader.getAttribute(i);
             String attributeName = hierarchicalStreamReader.getAttributeName(i);
-            if (attributeName.equals("id")) {
-                res.setProcessId(attribute);
+            if (attributeName.equals("name")) {
+                res.setConditionName(attribute);
             }
         }
 
@@ -66,7 +66,7 @@ public class ProcessNodeConverter implements Converter {
 
     @Override
     public boolean canConvert(Class aClass) {
-        return aClass == Processes.Process.class;
+        return aClass == Processes.Conditions.Condition.class;
     }
 }
 

@@ -31,14 +31,12 @@ public class ProcessesNodeConverter implements Converter {
         res.setProcesses(new ArrayList<>());
         List<Processes.Process> processes = res.getProcesses();
         int i = 0;
-        processes.add(new Processes.Process());
         while(hierarchicalStreamReader.hasMoreChildren()){
             hierarchicalStreamReader.moveDown();
-            System.out.println(hierarchicalStreamReader.getNodeName());
-            System.out.println(unmarshallingContext.convertAnother(processes.get(i),Processes.Process.class,new ProcessNodeConverter()));
-            hierarchicalStreamReader.moveUp();
-            i++;
             processes.add(new Processes.Process());
+            processes.set(i,(Processes.Process)unmarshallingContext.convertAnother(processes.get(i),Processes.Process.class,new ProcessNodeConverter()));
+            hierarchicalStreamReader.moveUp();
+            i++;;
         }
         return res;
     }
