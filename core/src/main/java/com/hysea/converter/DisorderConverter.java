@@ -30,11 +30,16 @@ public class DisorderConverter implements Converter {
 
         Processes.Disorder res = new Processes.Disorder();
         res.setSteps(new ArrayList<>());
-        List<? super ProcessNode> stepList = res.getSteps();
+        List<ProcessNode> stepList = res.getSteps();
         int i = 0;
         while(hierarchicalStreamReader.hasMoreChildren()){
             hierarchicalStreamReader.moveDown();
-            stepList.add(new ProcessNode());
+            stepList.add(new ProcessNode() {
+                @Override
+                public void next() throws Exception {
+
+                }
+            });
             if(hierarchicalStreamReader.getNodeName().equals("conditions")){
                 stepList.set(i,(Processes.Conditions)unmarshallingContext.convertAnother(stepList.get(i),Processes.Conditions.class,new ConditionsConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("steps")){

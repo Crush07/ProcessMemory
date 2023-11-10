@@ -9,6 +9,7 @@ import com.hysea.util.Matchers;
 import com.hysea.util.RandomUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import lombok.Data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class Main {
 
     private static volatile Long lastTime;
 
+    private static List<String> awaitSelectList;
+
     public static void main(String[] args) {
 
         List<ProcessNode> processNodeList = new ArrayList<>();
@@ -36,6 +39,8 @@ public class Main {
         File file = new File(Objects.requireNonNull(Main.class.getClassLoader().getResource("")).getPath()+"\\process\\DriversLicenseProcess.xml");
         String str = FileUtil.txt2String(file);
         List<String> steps = Matchers.getStringByRegex("<step>[^<>]*</step>", str).stream().map(s -> s.replaceAll("</?step>","")).collect(Collectors.toList());
+
+        awaitSelectList = steps;
 
         // 将XML转换为Java对象
         XStream xStream = new XStream(new DomDriver());
@@ -90,6 +95,10 @@ public class Main {
 
         Processes process = (Processes) xStream.fromXML(str);
 
+        List<Processes.Process> processes = process.getProcesses();
+
+        Processes.Process way3 = processes.stream().filter(s -> s.getProcessId().equals("way3")).collect(Collectors.toList()).get(0);
+
         //输出Java对象
         System.out.println(JSONObject.toJSONString(process));
 
@@ -107,40 +116,24 @@ public class Main {
 
         int step = 0;
 
-        while (!isExit) {
-
-            String[] tempSteps = {"","","","","","","","","",""};
-            int realStepIndex = (int) (Math.random() * 10);
-
-            List<Integer> excludeIndex = new ArrayList<>();
-            excludeIndex.add(step);
-            List<Integer> randomIndexAndExclude = RandomUtils.randomIndexAndExclude(steps.size(), excludeIndex, 9);
-            randomIndexAndExclude.add(realStepIndex,step);
-            for (int i = 0; i < randomIndexAndExclude.size(); i++) {
-                tempSteps[i] = steps.get(randomIndexAndExclude.get(i));
-            }
-
-            for (int i = 0; i < tempSteps.length; i++) {
-                System.out.println(i + ":" + tempSteps[i]);
-            }
-            ProcessNode processNode = new ProcessNode();
-
-            int i = scanner.nextInt();
-            if(realStepIndex != i){
-                isExit = true;
-            }else{
-                processNode.setProcessContent(steps.get(step));
-                processNodeList.add(processNode);
-            }
-            flushLastTime();
-
-            step++;
+        try {
+            way3.next();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
 
     }
 
-    private static void flushLastTime(){
+    public static void flushLastTime(){
         Main.lastTime = System.currentTimeMillis();
+    }
+
+    public static List<String> getAwaitSelectList() {
+        return awaitSelectList;
+    }
+
+    public static void setIsExit(boolean isExit) {
+        Main.isExit = isExit;
     }
 }

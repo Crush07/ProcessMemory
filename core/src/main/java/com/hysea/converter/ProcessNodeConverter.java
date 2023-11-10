@@ -42,11 +42,16 @@ public class ProcessNodeConverter implements Converter {
 
         //子节点
         res.setProcessNodeList(new ArrayList<>());
-        List<? super ProcessNode> processNodeList = res.getProcessNodeList();
+        List<ProcessNode> processNodeList = res.getProcessNodeList();
         int i = 0;
         while(hierarchicalStreamReader.hasMoreChildren()){
             hierarchicalStreamReader.moveDown();
-            processNodeList.add(new ProcessNode());
+            processNodeList.add(new ProcessNode() {
+                @Override
+                public void next() throws Exception {
+
+                }
+            });
             if(hierarchicalStreamReader.getNodeName().equals("conditions")){
                 processNodeList.set(i,(Processes.Conditions)unmarshallingContext.convertAnother(processNodeList.get(i),Processes.Conditions.class,new ConditionsConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("steps")){

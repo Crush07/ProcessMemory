@@ -1,6 +1,8 @@
 package com.hysea.entity;
 
+import com.hysea.Main;
 import com.hysea.converter.ProcessesNodeConverter;
+import com.hysea.util.RandomUtils;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
@@ -11,7 +13,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @NoArgsConstructor
 @Data
@@ -29,7 +33,7 @@ public class Processes {
     public static class Steps extends ProcessNode {
 
         @XStreamImplicit(itemFieldName = "step")
-        private List<? super ProcessNode> steps;
+        private List<ProcessNode> steps;
 
         @EqualsAndHashCode(callSuper = true)
         @NoArgsConstructor
@@ -38,6 +42,48 @@ public class Processes {
         @XStreamConverter(value = ToAttributedValueConverter.class,strings = {"step"})
         public static class Step extends ProcessNode {
             private String step;
+
+            @Override
+            public void next() throws Exception {
+                List<String> awaitSelectList = Main.getAwaitSelectList();
+
+                int stepIndex = 0;
+                for (int i = 0; i < awaitSelectList.size(); i++) {
+                    if(awaitSelectList.get(i).equals(step)){
+                        stepIndex = i;
+                    }
+                }
+
+                String[] tempSteps = {"","","","","","","","","",""};
+                int realStepIndex = (int) (Math.random() * 10);
+
+                List<Integer> excludeIndex = new ArrayList<>();
+                excludeIndex.add(stepIndex);
+                List<Integer> randomIndexAndExclude = RandomUtils.randomIndexAndExclude(awaitSelectList.size(), excludeIndex, 9);
+                randomIndexAndExclude.add(realStepIndex,stepIndex);
+                for (int i = 0; i < randomIndexAndExclude.size(); i++) {
+                    tempSteps[i] = awaitSelectList.get(randomIndexAndExclude.get(i));
+                }
+
+                for (int i = 0; i < tempSteps.length; i++) {
+                    System.out.println(i + ":" + tempSteps[i]);
+                }
+
+                int i = new Scanner(System.in).nextInt();
+                if(realStepIndex != i){
+                    Main.setIsExit(true);
+                    throw new Exception();
+                }
+
+                afterNext();
+            }
+        }
+
+        @Override
+        public void next() throws Exception {
+            for (ProcessNode step : getSteps()) {
+                step.next();
+            }
         }
     }
 
@@ -78,6 +124,18 @@ public class Processes {
             @XStreamAsAttribute
             private String conditionName;
 
+            @Override
+            public void next() throws Exception {
+                for (ProcessNode processNode : getProcessNodeList()) {
+                    processNode.next();
+                }
+            }
+        }
+
+        @Override
+        public void next() throws Exception {
+            int i = (int) (Math.random() * getConditions().size());
+            getConditions().get(i).next();
         }
     }
 
@@ -106,7 +164,14 @@ public class Processes {
         private String processId;
 
         @XStreamImplicit
-        private List<? super ProcessNode> processNodeList;
+        private List<ProcessNode> processNodeList;
+
+        @Override
+        public void next() throws Exception {
+            for (ProcessNode processNode : getProcessNodeList()) {
+                processNode.next();
+            }
+        }
 
     }
 }
