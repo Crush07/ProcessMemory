@@ -138,7 +138,7 @@ public class Processes {
             getConditions().get(i).next();
         }
 
-        
+
     }
 
     @EqualsAndHashCode(callSuper = true)
