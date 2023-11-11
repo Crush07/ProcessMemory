@@ -137,6 +137,8 @@ public class Processes {
             int i = (int) (Math.random() * getConditions().size());
             getConditions().get(i).next();
         }
+
+        
     }
 
     @EqualsAndHashCode(callSuper = true)
@@ -145,6 +147,12 @@ public class Processes {
     @XStreamAlias("disorder")
     public static class Disorder extends Steps {
 
+        @Override
+        public void next() throws Exception {
+            for (ProcessNode step : getSteps()) {
+
+            }
+        }
     }
 
     @EqualsAndHashCode(callSuper = true)
