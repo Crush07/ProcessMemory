@@ -1,6 +1,7 @@
 package com.hysea.converter;
 
-import com.hysea.entity.Processes;
+import com.hysea.entity.Process;
+import com.hysea.entity.ProcessStep;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -14,7 +15,7 @@ public class ProcessStepConverter implements Converter {
 //        Processes processes = (Processes) o;
 //        hierarchicalStreamWriter.startNode("process");
 //        StringJoiner stringJoiner = new StringJoiner(",");
-//        for (Processes.Process process : processes.getProcesses()) {
+//        for (Process process : processes.getProcesses()) {
 //            stringJoiner.add(process.getProcessId());
 //        }
 //        hierarchicalStreamWriter.setValue(stringJoiner.toString());
@@ -23,7 +24,7 @@ public class ProcessStepConverter implements Converter {
 
     @Override
     public Object unmarshal(HierarchicalStreamReader hierarchicalStreamReader, UnmarshallingContext unmarshallingContext) {
-        Processes.ProcessStep res = new Processes.ProcessStep();
+        ProcessStep res = new ProcessStep();
 
         int attributeCount = hierarchicalStreamReader.getAttributeCount();
         for(int i = 0;i < attributeCount;i++){
@@ -38,7 +39,7 @@ public class ProcessStepConverter implements Converter {
 
     @Override
     public boolean canConvert(Class aClass) {
-        return aClass == Processes.ProcessStep.class;
+        return aClass == ProcessStep.class;
     }
 }
 

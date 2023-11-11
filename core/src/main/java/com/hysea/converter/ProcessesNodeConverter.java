@@ -1,6 +1,7 @@
 package com.hysea.converter;
 
 import com.hysea.entity.Processes;
+import com.hysea.entity.Process;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -18,7 +19,7 @@ public class ProcessesNodeConverter implements Converter {
         Processes processes = (Processes) o;
         hierarchicalStreamWriter.startNode("process");
         StringJoiner stringJoiner = new StringJoiner(",");
-        for (Processes.Process process : processes.getProcesses()) {
+        for (Process process : processes.getProcesses()) {
             stringJoiner.add(process.getProcessId());
         }
         hierarchicalStreamWriter.setValue(stringJoiner.toString());
@@ -29,12 +30,12 @@ public class ProcessesNodeConverter implements Converter {
     public Object unmarshal(HierarchicalStreamReader hierarchicalStreamReader, UnmarshallingContext unmarshallingContext) {
         Processes res = new Processes();
         res.setProcesses(new ArrayList<>());
-        List<Processes.Process> processes = res.getProcesses();
+        List<Process> processes = res.getProcesses();
         int i = 0;
         while(hierarchicalStreamReader.hasMoreChildren()){
             hierarchicalStreamReader.moveDown();
-            processes.add(new Processes.Process());
-            processes.set(i,(Processes.Process)unmarshallingContext.convertAnother(processes.get(i),Processes.Process.class,new ProcessNodeConverter()));
+            processes.add(new Process());
+            processes.set(i,(Process)unmarshallingContext.convertAnother(processes.get(i),Process.class,new ProcessNodeConverter()));
             hierarchicalStreamReader.moveUp();
             i++;;
         }

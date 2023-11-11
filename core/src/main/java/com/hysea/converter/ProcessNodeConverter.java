@@ -1,7 +1,7 @@
 package com.hysea.converter;
 
-import com.hysea.entity.ProcessNode;
-import com.hysea.entity.Processes;
+import com.hysea.entity.*;
+import com.hysea.entity.Process;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -19,7 +19,7 @@ public class ProcessNodeConverter implements Converter {
 //        Processes processes = (Processes) o;
 //        hierarchicalStreamWriter.startNode("process");
 //        StringJoiner stringJoiner = new StringJoiner(",");
-//        for (Processes.Process process : processes.getProcesses()) {
+//        for (Process process : processes.getProcesses()) {
 //            stringJoiner.add(process.getProcessId());
 //        }
 //        hierarchicalStreamWriter.setValue(stringJoiner.toString());
@@ -28,7 +28,7 @@ public class ProcessNodeConverter implements Converter {
 
     @Override
     public Object unmarshal(HierarchicalStreamReader hierarchicalStreamReader, UnmarshallingContext unmarshallingContext) {
-        Processes.Process res = new Processes.Process();
+        Process res = new Process();
 
         //属性
         int attributeCount = hierarchicalStreamReader.getAttributeCount();
@@ -53,15 +53,15 @@ public class ProcessNodeConverter implements Converter {
                 }
             });
             if(hierarchicalStreamReader.getNodeName().equals("conditions")){
-                processNodeList.set(i,(Processes.Conditions)unmarshallingContext.convertAnother(processNodeList.get(i),Processes.Conditions.class,new ConditionsConverter()));
+                processNodeList.set(i,(Conditions)unmarshallingContext.convertAnother(processNodeList.get(i),Conditions.class,new ConditionsConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("steps")){
-                processNodeList.set(i,(Processes.Steps)unmarshallingContext.convertAnother(processNodeList.get(i),Processes.Steps.class,new StepsConverter()));
+                processNodeList.set(i,(Steps)unmarshallingContext.convertAnother(processNodeList.get(i),Steps.class,new StepsConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("step")){
-                processNodeList.set(i,(Processes.Steps.Step)unmarshallingContext.convertAnother(processNodeList.get(i),Processes.Steps.Step.class,new StepConverter()));
+                processNodeList.set(i,(Step)unmarshallingContext.convertAnother(processNodeList.get(i),Step.class,new StepConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("disorder")){
-                processNodeList.set(i,(Processes.Disorder)unmarshallingContext.convertAnother(processNodeList.get(i),Processes.Disorder.class,new DisorderConverter()));
+                processNodeList.set(i,(Disorder)unmarshallingContext.convertAnother(processNodeList.get(i),Disorder.class,new DisorderConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("process-step")){
-                processNodeList.set(i,(Processes.ProcessStep)unmarshallingContext.convertAnother(processNodeList.get(i),Processes.ProcessStep.class,new ProcessStepConverter()));
+                processNodeList.set(i,(ProcessStep)unmarshallingContext.convertAnother(processNodeList.get(i),ProcessStep.class,new ProcessStepConverter()));
             }
             i++;
             hierarchicalStreamReader.moveUp();
@@ -71,7 +71,7 @@ public class ProcessNodeConverter implements Converter {
 
     @Override
     public boolean canConvert(Class aClass) {
-        return aClass == Processes.Process.class;
+        return aClass == Process.class;
     }
 }
 

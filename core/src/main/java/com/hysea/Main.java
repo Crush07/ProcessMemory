@@ -2,8 +2,7 @@ package com.hysea;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hysea.converter.ProcessesNodeConverter;
-import com.hysea.entity.ProcessNode;
-import com.hysea.entity.Processes;
+import com.hysea.entity.*;
 import com.hysea.util.FileUtil;
 import com.hysea.util.Matchers;
 import com.hysea.util.RandomUtils;
@@ -12,6 +11,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import lombok.Data;
 
 import java.io.File;
+import com.hysea.entity.Process;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ public class Main {
 
     private static List<String> awaitSelectList;
 
-    public static HashMap<String,Processes.Process> processIdProcessMap = new HashMap<>();
+    public static HashMap<String,Process> processIdProcessMap = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -43,49 +43,49 @@ public class Main {
 
         // 将XML转换为Java对象
         XStream xStream = new XStream(new DomDriver());
-//        xStream.addDefaultImplementation(Processes.Process.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Processes.Conditions.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Processes.Conditions.Condition.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Processes.Steps.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Processes.Steps.Step.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Processes.ProcessStep.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Processes.Disorder.class,ProcessNode.class);
-//        xStream.alias("conditions",Processes.Conditions.class);
-////        xStream.addImplicitCollection(Processes.Conditions.class,"conditions");
-//        xStream.alias("condition",Processes.Conditions.Condition.class);
-//        xStream.alias("steps",Processes.Steps.class);
-////        xStream.addImplicitCollection(Processes.Steps.class,"steps");
-//        xStream.alias("step",Processes.Steps.Step.class);
-//        xStream.alias("processes",Processes.class);
-////        xStream.addImplicitCollection(Processes.class,"processes");
-//        xStream.alias("process",Processes.Process.class);
-////        xStream.aliasField("id", Processes.Process.class, "processId");
-//        xStream.alias("disorder",Processes.Disorder.class);
-//        xStream.alias("process-step",Processes.ProcessStep.class);
+//        xStream.addDefaultImplementation(Process.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Conditions.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Conditions.Condition.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Steps.class,ProcessNode.class);
+//        xStream.addDefaultImplementation(Steps.Step.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(ProcessStep.class,ProcessNode.class);
+////        xStream.addDefaultImplementation(Disorder.class,ProcessNode.class);
+//        xStream.alias("conditions",Conditions.class);
+////        xStream.addImplicitCollection(Conditions.class,"conditions");
+//        xStream.alias("condition",Conditions.Condition.class);
+//        xStream.alias("steps",Steps.class);
+////        xStream.addImplicitCollection(Steps.class,"steps");
+//        xStream.alias("step",Steps.Step.class);
+//        xStream.alias("processes",class);
+////        xStream.addImplicitCollection(class,"processes");
+//        xStream.alias("process",Process.class);
+////        xStream.aliasField("id", Process.class, "processId");
+//        xStream.alias("disorder",Disorder.class);
+//        xStream.alias("process-step",ProcessStep.class);
 
         // 新增这一行，根据类型添加安全权限
         xStream.allowTypes(new Class[]{
-                Processes.Conditions.class,
-                Processes.Conditions.Condition.class,
-                Processes.Steps.class,
-                Processes.Steps.Step.class,
+                Conditions.class,
+                Condition.class,
+                Steps.class,
+                Step.class,
                 Processes.class,
-                Processes.Process.class,
-                Processes.Disorder.class,
-                Processes.ProcessStep.class,
+                Process.class,
+                Disorder.class,
+                ProcessStep.class,
                 ProcessNode.class
         });
 
         xStream.autodetectAnnotations(true);
         xStream.processAnnotations(new Class[]{
-                Processes.Conditions.class,
-                Processes.Conditions.Condition.class,
-                Processes.Steps.class,
-                Processes.Steps.Step.class,
+                Conditions.class,
+                Condition.class,
+                Steps.class,
+                Step.class,
                 Processes.class,
-                Processes.Process.class,
-                Processes.Disorder.class,
-                Processes.ProcessStep.class,
+                Process.class,
+                Disorder.class,
+                ProcessStep.class,
                 ProcessNode.class
         });
         xStream.registerConverter(new ProcessesNodeConverter());
@@ -94,11 +94,11 @@ public class Main {
 
         Processes process = (Processes) xStream.fromXML(str);
 
-        List<Processes.Process> processes = process.getProcesses();
+        List<Process> processes = process.getProcesses();
 
-        Processes.Process way3 = processes.stream().filter(s -> s.getProcessId().equals("way3")).collect(Collectors.toList()).get(0);
+        Process way3 = processes.stream().filter(s -> s.getProcessId().equals("way3")).collect(Collectors.toList()).get(0);
 
-        Processes.Process crossTheRoad = processes.stream().filter(s -> s.getProcessId().equals("crossTheRoad")).collect(Collectors.toList()).get(0);
+        Process crossTheRoad = processes.stream().filter(s -> s.getProcessId().equals("crossTheRoad")).collect(Collectors.toList()).get(0);
 
         processIdProcessMap.put("way3",way3);
         processIdProcessMap.put("crossTheRoad",crossTheRoad);

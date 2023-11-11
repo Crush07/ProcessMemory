@@ -1,7 +1,6 @@
 package com.hysea.converter;
 
-import com.hysea.entity.ProcessNode;
-import com.hysea.entity.Processes;
+import com.hysea.entity.*;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -18,7 +17,7 @@ public class DisorderConverter implements Converter {
 //        Processes processes = (Processes) o;
 //        hierarchicalStreamWriter.startNode("process");
 //        StringJoiner stringJoiner = new StringJoiner(",");
-//        for (Processes.Process process : processes.getProcesses()) {
+//        for (Process process : processes.getProcesses()) {
 //            stringJoiner.add(process.getProcessId());
 //        }
 //        hierarchicalStreamWriter.setValue(stringJoiner.toString());
@@ -28,7 +27,7 @@ public class DisorderConverter implements Converter {
     @Override
     public Object unmarshal(HierarchicalStreamReader hierarchicalStreamReader, UnmarshallingContext unmarshallingContext) {
 
-        Processes.Disorder res = new Processes.Disorder();
+        Disorder res = new Disorder();
         res.setSteps(new ArrayList<>());
         List<ProcessNode> stepList = res.getSteps();
         int i = 0;
@@ -41,15 +40,15 @@ public class DisorderConverter implements Converter {
                 }
             });
             if(hierarchicalStreamReader.getNodeName().equals("conditions")){
-                stepList.set(i,(Processes.Conditions)unmarshallingContext.convertAnother(stepList.get(i),Processes.Conditions.class,new ConditionsConverter()));
+                stepList.set(i,(Conditions)unmarshallingContext.convertAnother(stepList.get(i),Conditions.class,new ConditionsConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("steps")){
-                stepList.set(i,(Processes.Steps)unmarshallingContext.convertAnother(stepList.get(i),Processes.Steps.class,new StepsConverter()));
+                stepList.set(i,(Steps)unmarshallingContext.convertAnother(stepList.get(i),Steps.class,new StepsConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("step")){
-                stepList.set(i,(Processes.Steps.Step)unmarshallingContext.convertAnother(stepList.get(i),Processes.Steps.Step.class,new StepConverter()));
+                stepList.set(i,(Step)unmarshallingContext.convertAnother(stepList.get(i),Step.class,new StepConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("disorder")){
-                stepList.set(i,(Processes.Disorder)unmarshallingContext.convertAnother(stepList.get(i),Processes.Disorder.class,new DisorderConverter()));
+                stepList.set(i,(Disorder)unmarshallingContext.convertAnother(stepList.get(i),Disorder.class,new DisorderConverter()));
             }else if(hierarchicalStreamReader.getNodeName().equals("process-step")){
-                stepList.set(i,(Processes.ProcessStep)unmarshallingContext.convertAnother(stepList.get(i),Processes.ProcessStep.class,new ProcessStepConverter()));
+                stepList.set(i,(ProcessStep)unmarshallingContext.convertAnother(stepList.get(i),ProcessStep.class,new ProcessStepConverter()));
             }
             i++;
             hierarchicalStreamReader.moveUp();
@@ -59,7 +58,7 @@ public class DisorderConverter implements Converter {
 
     @Override
     public boolean canConvert(Class aClass) {
-        return aClass == Processes.Disorder.class;
+        return aClass == Disorder.class;
     }
 }
 
