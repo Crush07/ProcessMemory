@@ -1,4 +1,5 @@
 公交车站	n	100
+学校区域	n	100
 挂一档	step	100
 挂二档	step	100
 挂三档	step	100
@@ -9,6 +10,7 @@
 踩刹车	step	100
 踩油门	step	100
 松离合	step	100
+慢慢松离合	step	100
 松刹车	step	100
 松油门	step	100
 系安全带	step	100
@@ -17,14 +19,21 @@
 数8秒	step	100
 数3秒	step	100
 靠边停车	step	100
+点刹	step	100
 会车	step	100
 保持直线行驶	step	100
 方向盘打死	step	100
+方向盘摆正	step	100
+方向盘打90度	step	100
+方向盘打60度	step	100
 熄火	step	100
 开门	step	100
 关门	step	100
 打左转向灯	step	100
 打右转向灯	step	100
+关左转向灯	step	100
+关右转向灯	step	100
 调整座位	step	100
 检查档位	step	100
 检查灯光	step	100
+说准备好了	step	100
