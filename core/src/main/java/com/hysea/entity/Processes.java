@@ -132,6 +132,7 @@ public class Processes {
 
             @Override
             public void next() throws Exception {
+                System.out.println(conditionName);
                 for (ProcessNode processNode : getProcessNodeList()) {
                     processNode.next();
                 }
