@@ -1,14 +1,12 @@
 package com.hysea;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hysea.converter.ProcessesNodeConverter;
+import com.hysea.converter.ProcessesConverter;
 import com.hysea.entity.*;
 import com.hysea.util.FileUtil;
 import com.hysea.util.Matchers;
-import com.hysea.util.RandomUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import lombok.Data;
 
 import java.io.File;
 import com.hysea.entity.Process;
@@ -88,7 +86,7 @@ public class Main {
                 ProcessStep.class,
                 ProcessNode.class
         });
-        xStream.registerConverter(new ProcessesNodeConverter());
+        xStream.registerConverter(new ProcessesConverter());
 //        xStream.allowTypesByRegExp(new String[] { ".*" });
 //        xStream.ignoreUnknownElements();
 

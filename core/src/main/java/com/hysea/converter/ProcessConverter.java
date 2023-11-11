@@ -10,9 +10,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
-public class ProcessNodeConverter implements Converter {
+public class ProcessConverter implements Converter {
     @Override
     public void marshal(Object o, HierarchicalStreamWriter hierarchicalStreamWriter, MarshallingContext marshallingContext) {
 

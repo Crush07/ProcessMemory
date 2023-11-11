@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class ProcessesNodeConverter implements Converter {
+public class ProcessesConverter implements Converter {
     @Override
     public void marshal(Object o, HierarchicalStreamWriter hierarchicalStreamWriter, MarshallingContext marshallingContext) {
 
@@ -35,7 +35,7 @@ public class ProcessesNodeConverter implements Converter {
         while(hierarchicalStreamReader.hasMoreChildren()){
             hierarchicalStreamReader.moveDown();
             processes.add(new Process());
-            processes.set(i,(Process)unmarshallingContext.convertAnother(processes.get(i),Process.class,new ProcessNodeConverter()));
+            processes.set(i,(Process)unmarshallingContext.convertAnother(processes.get(i),Process.class,new ProcessConverter()));
             hierarchicalStreamReader.moveUp();
             i++;;
         }
