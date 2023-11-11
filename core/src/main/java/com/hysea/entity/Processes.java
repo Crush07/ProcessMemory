@@ -99,6 +99,12 @@ public class Processes {
         @XStreamAlias("process")
         @XStreamAsAttribute
         private String mappingProcessId;
+
+        @Override
+        public void next() throws Exception {
+            setProcessNodeList(Main.processIdProcessMap.get(getMappingProcessId()).getProcessNodeList());
+            super.next();
+        }
     }
 
     @EqualsAndHashCode(callSuper = true)

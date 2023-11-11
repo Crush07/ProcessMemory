@@ -12,10 +12,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import lombok.Data;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -27,6 +24,8 @@ public class Main {
     private static volatile Long lastTime;
 
     private static List<String> awaitSelectList;
+
+    public static HashMap<String,Processes.Process> processIdProcessMap = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -98,6 +97,12 @@ public class Main {
         List<Processes.Process> processes = process.getProcesses();
 
         Processes.Process way3 = processes.stream().filter(s -> s.getProcessId().equals("way3")).collect(Collectors.toList()).get(0);
+
+        Processes.Process crossTheRoad = processes.stream().filter(s -> s.getProcessId().equals("crossTheRoad")).collect(Collectors.toList()).get(0);
+
+        processIdProcessMap.put("way3",way3);
+        processIdProcessMap.put("crossTheRoad",crossTheRoad);
+
 
         //输出Java对象
         System.out.println(JSONObject.toJSONString(process));
