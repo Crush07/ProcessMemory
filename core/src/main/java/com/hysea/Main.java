@@ -2,14 +2,14 @@ package com.hysea;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hysea.converter.ProcessesConverter;
-import com.hysea.entity.*;
+import com.hysea.entity.run.*;
+import com.hysea.entity.run.Process;
 import com.hysea.util.FileUtil;
 import com.hysea.util.Matchers;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import java.io.File;
-import com.hysea.entity.Process;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,26 +41,6 @@ public class Main {
 
         // 将XML转换为Java对象
         XStream xStream = new XStream(new DomDriver());
-//        xStream.addDefaultImplementation(Process.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Conditions.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Conditions.Condition.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Steps.class,ProcessNode.class);
-//        xStream.addDefaultImplementation(Steps.Step.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(ProcessStep.class,ProcessNode.class);
-////        xStream.addDefaultImplementation(Disorder.class,ProcessNode.class);
-//        xStream.alias("conditions",Conditions.class);
-////        xStream.addImplicitCollection(Conditions.class,"conditions");
-//        xStream.alias("condition",Conditions.Condition.class);
-//        xStream.alias("steps",Steps.class);
-////        xStream.addImplicitCollection(Steps.class,"steps");
-//        xStream.alias("step",Steps.Step.class);
-//        xStream.alias("processes",class);
-////        xStream.addImplicitCollection(class,"processes");
-//        xStream.alias("process",Process.class);
-////        xStream.aliasField("id", Process.class, "processId");
-//        xStream.alias("disorder",Disorder.class);
-//        xStream.alias("process-step",ProcessStep.class);
-
         // 新增这一行，根据类型添加安全权限
         xStream.allowTypes(new Class[]{
                 Conditions.class,
@@ -91,6 +71,8 @@ public class Main {
 //        xStream.ignoreUnknownElements();
 
         Processes process = (Processes) xStream.fromXML(str);
+        Process crossTheRoad1 = process.getProcessByProcessId("crossTheRoad");
+        System.out.println(crossTheRoad1);
 
         List<Process> processes = process.getProcesses();
 

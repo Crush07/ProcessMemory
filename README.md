@@ -41,6 +41,9 @@ DisOrder
 ## 有序的主体
 Processes，Process，Steps，Conditions，ProcessNode，ProcessStep，Step，Condition
 
+## 继承ProcessNode的子类
+DisOrder，Process，Steps，Conditions，ProcessStep，Step，Condition
+
 ## 流程文件存放位置
 resources/process
 

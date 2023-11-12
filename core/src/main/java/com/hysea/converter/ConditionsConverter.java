@@ -1,6 +1,7 @@
 package com.hysea.converter;
 
-import com.hysea.entity.*;
+import com.hysea.entity.run.Condition;
+import com.hysea.entity.run.Conditions;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;

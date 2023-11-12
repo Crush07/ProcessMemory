@@ -1,7 +1,6 @@
 package com.hysea.converter;
 
-import com.hysea.entity.Process;
-import com.hysea.entity.ProcessStep;
+import com.hysea.entity.run.ProcessStep;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;

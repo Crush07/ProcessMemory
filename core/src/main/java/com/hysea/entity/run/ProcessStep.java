@@ -1,4 +1,4 @@
-package com.hysea.entity;
+package com.hysea.entity.run;
 
 import com.hysea.Main;
 import lombok.Data;

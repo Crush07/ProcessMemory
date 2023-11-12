@@ -1,6 +1,5 @@
-package com.hysea.entity;
+package com.hysea.entity.run;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

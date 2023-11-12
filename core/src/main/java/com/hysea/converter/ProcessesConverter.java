@@ -1,7 +1,7 @@
 package com.hysea.converter;
 
-import com.hysea.entity.Processes;
-import com.hysea.entity.Process;
+import com.hysea.entity.run.Processes;
+import com.hysea.entity.run.Process;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -37,7 +37,7 @@ public class ProcessesConverter implements Converter {
             processes.add(new Process());
             processes.set(i,(Process)unmarshallingContext.convertAnother(processes.get(i),Process.class,new ProcessConverter()));
             hierarchicalStreamReader.moveUp();
-            i++;;
+            i++;
         }
         return res;
     }

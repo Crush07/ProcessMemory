@@ -1,16 +1,11 @@
 package com.hysea.converter;
 
-import com.hysea.entity.ProcessNode;
-import com.hysea.entity.Processes;
-import com.hysea.entity.Step;
+import com.hysea.entity.run.Step;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StepConverter implements Converter {
     @Override

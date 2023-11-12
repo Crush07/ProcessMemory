@@ -1,4 +1,4 @@
-package com.hysea.entity;
+package com.hysea.entity.run;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
