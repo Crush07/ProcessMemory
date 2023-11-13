@@ -35,9 +35,8 @@ public class Main {
 
         File file = new File(Objects.requireNonNull(Main.class.getClassLoader().getResource("")).getPath()+"\\process\\DriversLicenseProcess.xml");
         String str = FileUtil.txt2String(file);
-        List<String> steps = Matchers.getStringByRegex("<step>[^<>]*</step>", str).stream().map(s -> s.replaceAll("</?step>","")).collect(Collectors.toList());
+//        List<String> steps = Matchers.getStringByRegex("<step>[^<>]*</step>", str).stream().map(s -> s.replaceAll("</?step>","")).collect(Collectors.toList());
 
-        awaitSelectList = steps;
 
         // 将XML转换为Java对象
         XStream xStream = new XStream(new DomDriver());
@@ -87,9 +86,13 @@ public class Main {
         //输出Java对象
 //        System.out.println(JSONObject.toJSONString(process));
         System.out.println(process);
+        System.out.println(process.getAllProcessStep());
         process.setProcesses(process.getAllProcessStep().stream().peek(s -> {
-            s.setProcessNodeList(s.getProcessByProcessId(s.getProcessId()).getProcessNodeList());
+            s.setProcessNodeList(s.getProcessByProcessId(s.getMappingProcessId()).getProcessNodeList());
         }).collect(Collectors.toList()));
+
+
+        awaitSelectList = process.getAllStep().stream().map(Step::getStep).collect(Collectors.toList());
 
         //计时线程
         Thread timer = new Thread(() -> {

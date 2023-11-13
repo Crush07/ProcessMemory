@@ -64,7 +64,7 @@ public class ProcessConverter implements Converter {
             }
 
             //维护对象嵌套路径
-            res.getChildList().add(processNodeList.get(i));
+            res.getChildList().add(processNodeList.get(i),res);
 
             hierarchicalStreamReader.moveUp();
             i++;

@@ -1,6 +1,7 @@
 package com.hysea.entity.run.tree;
 
 import com.hysea.entity.run.ProcessStep;
+import com.hysea.entity.run.Step;
 import com.hysea.entity.run.list.MainBodyList;
 import lombok.Data;
 
@@ -25,22 +26,39 @@ public class MainBodyTreeNode {
     public Process getProcessByProcessId(String processId){
 
         MainBodyTreeNode parent = getParent();
+        MainBodyTreeNode lastParent = this;
         while (parent != null){
+            lastParent = parent;
             parent = parent.getParent();
         }
 
-        return dfsByClazz(Process.class).stream().map(s -> (Process) s).filter(s -> s.getProcessId().equals(processId)).findFirst().orElse(null);
+        return lastParent.dfsByClazz(Process.class).stream().map(s -> (Process) s).filter(s -> s.getProcessId().equals(processId)).findFirst().orElse(null);
 
     }
 
     public List<ProcessStep> getAllProcessStep(){
 
         MainBodyTreeNode parent = getParent();
+        MainBodyTreeNode lastParent = this;
         while (parent != null){
+            lastParent = parent;
             parent = parent.getParent();
         }
 
-        return dfsByClazz(ProcessStep.class).stream().map(s -> (ProcessStep) s).collect(Collectors.toList());
+        return lastParent.dfsByClazz(ProcessStep.class).stream().map(s -> (ProcessStep) s).collect(Collectors.toList());
+
+    }
+
+    public List<Step> getAllStep(){
+
+        MainBodyTreeNode parent = getParent();
+        MainBodyTreeNode lastParent = this;
+        while (parent != null){
+            lastParent = parent;
+            parent = parent.getParent();
+        }
+
+        return lastParent.dfsByClazz(Step.class).stream().map(s -> (Step) s).collect(Collectors.toList());
 
     }
 
@@ -49,8 +67,8 @@ public class MainBodyTreeNode {
         for (MainBodyTreeNode mainBodyTreeNode : getChildList()) {
             if(clazz.isAssignableFrom(mainBodyTreeNode.getClass())){
                 res.add(mainBodyTreeNode);
-                res.addAll(mainBodyTreeNode.dfsByClazz(clazz));
             }
+            res.addAll(mainBodyTreeNode.dfsByClazz(clazz));
         }
         return res;
 

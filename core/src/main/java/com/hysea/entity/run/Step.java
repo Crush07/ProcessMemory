@@ -26,6 +26,7 @@ public class Step extends ProcessNode {
         for (int i = 0; i < awaitSelectList.size(); i++) {
             if (awaitSelectList.get(i).equals(step)) {
                 stepIndex = i;
+                break;
             }
         }
 

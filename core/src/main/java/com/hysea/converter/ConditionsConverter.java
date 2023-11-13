@@ -38,7 +38,7 @@ public class ConditionsConverter implements Converter {
 
 
             //维护对象嵌套路径
-            res.getChildList().add(conditionList.get(i));
+            res.getChildList().add(conditionList.get(i),res);
 
             hierarchicalStreamReader.moveUp();
             i++;

@@ -9,20 +9,21 @@
             </condition>
             <condition name="红灯">
                 <steps>
-                    <step>停车</step>
-                    <step>挂一档</step>
-                    <step>绿灯</step>
-                    <step>起步</step>
-                    <step>挂二挡</step>
+                    <step score="100">停车</step>
+                    <step score="100">挂一档</step>
+                    <conditions>
+                        <condition name="绿灯">
+                            <steps>
+                                <step>起步</step>
+                                <step>挂二挡</step>
+                            </steps>
+                        </condition>
+                    </conditions>
                 </steps>
             </condition>
             <condition name="绿灯">
                 <steps>
-                    <step>点刹过</step>
-                    <step>挂一档</step>
-                    <step>绿灯</step>
-                    <step>起步</step>
-                    <step>挂二挡</step>
+                    <step score="100">点刹过</step>
                 </steps>
             </condition>
         </conditions>
@@ -31,22 +32,35 @@
     <process id="way3">
         <steps>
             <disorder>
-                <step>调整座位</step>
-                <step>检查档位</step>
-                <step>检查灯光</step>
+                <step score="0">调整座位</step>
+                <step score="100">检查档位</step>
+                <step score="100">检查灯光</step>
             </disorder>
-            <step>说准备好了</step>
-            <step>下车</step>
-            <step>按按钮</step>
-            <step>上车</step>
-            <step>关门</step>
-            <step>系安全带</step>
-            <step>打火</step>
-            <step>做灯光考试</step>
+            <step score="100">说准备好了</step>
+            <step score="100">下车</step>
+            <step score="100">按按钮</step>
+            <step score="100">上车</step>
+            <step score="100">关门</step>
+            <step score="100">系安全带</step>
+            <step score="100">打火</step>
+            <conditions>
+                <condition name="下面进行夜间灯光考试，请打开前照灯">
+                    <steps>
+                        <step score="100">打开前照灯</step>
+                    </steps>
+                    <conditions>
+                        <condition name="夜间与机动车回车">
+                            <steps>
+                                <step score="100">打开前照灯</step>
+                            </steps>
+                        </condition>
+                    </conditions>
+                </condition>
+            </conditions>
             <step>听语音报考试路线</step>
             <step>左转向灯</step>
             <step>离合带刹车</step>
-            <step>挂一档</step>
+            <step score="100">挂一档</step>
             <step>松离合</step>
             <step>数3秒</step>
             <step>关左转向灯</step>

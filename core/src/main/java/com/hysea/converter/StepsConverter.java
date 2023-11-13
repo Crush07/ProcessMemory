@@ -51,7 +51,7 @@ public class StepsConverter implements Converter {
             }
 
             //维护对象嵌套路径
-            res.getChildList().add(stepList.get(i));
+            res.getChildList().add(stepList.get(i),res);
 
             hierarchicalStreamReader.moveUp();
             i++;
