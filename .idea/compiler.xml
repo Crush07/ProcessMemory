@@ -10,5 +10,9 @@
         <module name="core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="core" target="1.8" />
+      <module name="processMemory" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
