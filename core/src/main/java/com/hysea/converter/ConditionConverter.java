@@ -61,8 +61,12 @@ public class ConditionConverter implements Converter {
             }else if(hierarchicalStreamReader.getNodeName().equals("process-step")){
                 processNodeList.set(i,(ProcessStep)unmarshallingContext.convertAnother(processNodeList.get(i),ProcessStep.class,new ProcessStepConverter()));
             }
-            i++;
+
+            //维护对象嵌套路径
+            res.getChildList().add(processNodeList.get(i));
+
             hierarchicalStreamReader.moveUp();
+            i++;
         }
         return res;
     }

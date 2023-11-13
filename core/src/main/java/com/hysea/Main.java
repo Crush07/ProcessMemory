@@ -85,7 +85,11 @@ public class Main {
 
 
         //输出Java对象
-        System.out.println(JSONObject.toJSONString(process));
+//        System.out.println(JSONObject.toJSONString(process));
+        System.out.println(process);
+        process.setProcesses(process.getAllProcessStep().stream().peek(s -> {
+            s.setProcessNodeList(s.getProcessByProcessId(s.getProcessId()).getProcessNodeList());
+        }).collect(Collectors.toList()));
 
         //计时线程
         Thread timer = new Thread(() -> {

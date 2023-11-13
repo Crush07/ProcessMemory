@@ -35,8 +35,13 @@ public class ConditionsConverter implements Converter {
             hierarchicalStreamReader.moveDown();
             conditionList.add(new Condition());
             conditionList.set(i,(Condition)unmarshallingContext.convertAnother(conditionList.get(i),Condition.class,new ConditionConverter()));
-            i++;
+
+
+            //维护对象嵌套路径
+            res.getChildList().add(conditionList.get(i));
+
             hierarchicalStreamReader.moveUp();
+            i++;
         }
         return res;
     }

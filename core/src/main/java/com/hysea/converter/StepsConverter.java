@@ -49,8 +49,12 @@ public class StepsConverter implements Converter {
             }else if(hierarchicalStreamReader.getNodeName().equals("process-step")){
                 stepList.set(i,(ProcessStep)unmarshallingContext.convertAnother(stepList.get(i),ProcessStep.class,new ProcessStepConverter()));
             }
-            i++;
+
+            //维护对象嵌套路径
+            res.getChildList().add(stepList.get(i));
+
             hierarchicalStreamReader.moveUp();
+            i++;
         }
         return res;
 

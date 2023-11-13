@@ -1,5 +1,7 @@
 package com.hysea.entity.run.tree;
 
+import com.hysea.entity.run.ProcessStep;
+import com.hysea.entity.run.list.MainBodyList;
 import lombok.Data;
 
 import com.hysea.entity.run.Process;
@@ -11,12 +13,12 @@ import java.util.stream.Collectors;
 @Data
 public class MainBodyTreeNode {
 
-    List<MainBodyTreeNode> childList;
+    MainBodyList childList;
 
     MainBodyTreeNode parent;
 
     public MainBodyTreeNode() {
-        this.childList = new ArrayList<>();
+        this.childList = new MainBodyList();
         this.parent = null;
     }
 
@@ -31,10 +33,21 @@ public class MainBodyTreeNode {
 
     }
 
+    public List<ProcessStep> getAllProcessStep(){
+
+        MainBodyTreeNode parent = getParent();
+        while (parent != null){
+            parent = parent.getParent();
+        }
+
+        return dfsByClazz(ProcessStep.class).stream().map(s -> (ProcessStep) s).collect(Collectors.toList());
+
+    }
+
     public List<Object> dfsByClazz(Class clazz){
         List<Object> res = new ArrayList<>();
         for (MainBodyTreeNode mainBodyTreeNode : getChildList()) {
-            if(mainBodyTreeNode.getClass().isAssignableFrom(clazz)){
+            if(clazz.isAssignableFrom(mainBodyTreeNode.getClass())){
                 res.add(mainBodyTreeNode);
                 res.addAll(mainBodyTreeNode.dfsByClazz(clazz));
             }

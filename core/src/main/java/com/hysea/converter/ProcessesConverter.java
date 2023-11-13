@@ -36,6 +36,10 @@ public class ProcessesConverter implements Converter {
             hierarchicalStreamReader.moveDown();
             processes.add(new Process());
             processes.set(i,(Process)unmarshallingContext.convertAnother(processes.get(i),Process.class,new ProcessConverter()));
+
+            //维护对象嵌套路径
+            res.getChildList().add(processes.get(i));
+
             hierarchicalStreamReader.moveUp();
             i++;
         }
